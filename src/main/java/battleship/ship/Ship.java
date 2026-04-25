@@ -1,31 +1,31 @@
 package battleship.ship;
 
-public class Ship {
-    private final String name;
-    private final int size;
-    private int hits;
+public abstract class Ship {
 
-    public Ship(String name, int size) {
+    protected final String name;
+    protected final int size;
+    protected int hits;
+
+    protected Ship(String name, int size) {
         this.name = name;
         this.size = size;
         this.hits = 0;
     }
 
     public void registerHit() {
-        if (hits < size) {
-            hits++;
-        }
+        if (hits < size) hits++;
     }
 
     public boolean isSunk() {
         return hits >= size;
     }
 
-    public int getSize() {
-        return size;
+    public boolean isStealthy() {
+        return false;
     }
 
-    public String getName() {
-        return name;
-    }
+    public int getSize()    { return size; }
+    public String getName() { return name; }
+
+    public abstract String getType();
 }

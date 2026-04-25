@@ -3,13 +3,23 @@ package battleship.ship;
 public class ShipFactory {
 
     public Ship createShip(String type) {
-        return switch (type.toLowerCase()) {
-            case "carrier" -> new Ship("Carrier", 5);
-            case "battleship" -> new Ship("Battleship", 4);
-            case "destroyer" -> new Ship("Destroyer", 3);
-            case "submarine" -> new Ship("Submarine", 3);
-            case "patrolboat" -> new Ship("PatrolBoat", 2);
-            default -> throw new IllegalArgumentException("Unknown ship type: " + type);
+        switch (type.toLowerCase()) {
+            case "carrier":    return new Carrier();
+            case "battleship": return new Battleship();
+            case "destroyer":  return new Destroyer();
+            case "submarine":  return new Submarine();
+            case "patrolboat": return new PatrolBoat();
+            default: throw new IllegalArgumentException("Unknown ship type: " + type);
+        }
+    }
+
+    public Ship[] createStandardFleet() {
+        return new Ship[]{
+                new Carrier(),
+                new Battleship(),
+                new Destroyer(),
+                new Submarine(),
+                new PatrolBoat()
         };
     }
 }

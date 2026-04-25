@@ -3,29 +3,31 @@ package battleship.board;
 import battleship.ship.Ship;
 
 public class Cell {
+
     private Ship ship;
-    private boolean hit;
+    private boolean attacked;
 
-    public boolean hasShip() {
-        return ship != null;
+    public boolean hasShip() { return ship != null; }
+
+    public void placeShip(Ship ship) { this.ship = ship; }
+
+    public boolean isAttacked() { return attacked; }
+
+    public boolean wasHit() {
+        return attacked && ship != null && !ship.isStealthy();
     }
 
-    public void placeShip(Ship ship) {
-        this.ship = ship;
-    }
+    public int attack() {
+        if (attacked) return AttackResult.ALREADY_ATTACKED;
 
-    public boolean isHit() {
-        return hit;
-    }
+        attacked = true;
 
-    public boolean attack() {
-        if (hit) return false; // already attacked
-        hit = true;
+        if (ship == null)      return AttackResult.MISS;
 
-        if (ship != null) {
-            ship.registerHit();
-            return true;
-        }
-        return false;
+        ship.registerHit();
+
+        if (ship.isStealthy()) return AttackResult.MISS;
+        if (ship.isSunk())     return AttackResult.SUNK;
+        return AttackResult.HIT;
     }
 }

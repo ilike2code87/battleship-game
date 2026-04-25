@@ -6,4 +6,5 @@ import battleship.board.Coordinate;
 public interface Player {
     Coordinate chooseMove(Board opponentBoard);
     String getName();
+    default void recordResult(Coordinate coord, int result) {}
 }
